@@ -21,6 +21,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import Swal from "sweetalert2";
 
 const App = () => {
   const [data, setData] = useState(null);
@@ -34,6 +35,11 @@ const App = () => {
     sse.addEventListener("put", (data) => {
       const newData = JSON.parse(data.data);
       console.log(newData);
+
+      const { risk } = newData.data;
+      if (risk[risk.length - 1] > 0.7) {
+        Swal.fire("發生!! AKI ! ");
+      }
       setData(newData.data);
     });
   }, []);
